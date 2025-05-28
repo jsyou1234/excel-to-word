@@ -16,9 +16,8 @@ def home():
 
 @app.route('/generate_oa', methods=['POST'])
 def generate_oa():
-    # 1. 파일 및 수기 입력 값 가져오기
     file = request.files['excel_file']
-    recipientto = request.form.get('recipientto')  # 이메일 수신처
+    recipientto = request.form.get('recipientto')  # 수신처만 받음
 
     if not file:
         return '엑셀 파일을 선택해주세요.'
@@ -26,7 +25,7 @@ def generate_oa():
     filepath = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(filepath)
 
-    # 2. 엑셀에서 YourRef 아래의 셀 값 추출
+    # 엑셀에서 YourRef 값 추출
     df = pd.read_excel(filepath, header=None)
     ref_value = None
     for i in range(len(df)):
@@ -40,7 +39,7 @@ def generate_oa():
     if not ref_value:
         return '엑셀에서 YourRef 값을 찾을 수 없습니다.'
 
-    # 3. 워드 템플릿 열기 및 텍스트 치환
+    # 워드 템플릿 열기 및 텍스트 치환
     template_path = 'templates/OA검토보고_이메일.docx'
     doc = Document(template_path)
 
