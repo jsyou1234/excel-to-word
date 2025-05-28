@@ -2,13 +2,33 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>엑셀 업로드</title>
+    <title>보고서 생성 웹앱</title>
 </head>
 <body>
-    <h2>엑셀 파일 업로드 → 워드 문서 만들기</h2>
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="excel_file" accept=".xlsx" required>
-        <button type="submit">문서 생성</button>
-    </form>
+    <h2>보고서 생성 웹앱</h2>
+
+    <button onclick="showPatentOptions()">특허</button>
+
+    <div id="patent-buttons" style="display: none; margin-top: 20px;">
+        <button onclick="showUploadForm()" style="margin-left: 20px;">OA검토보고</button>
+    </div>
+    
+    <div id="upload-form" style="display: none; margin-top: 20px; margin-left: 40px;">
+        <form action="/generate_oa" method="post" enctype="multipart/form-data">
+            <label>엑셀 파일 선택:</label><br>
+            <input type="file" name="excel_file" accept=".xlsx" required><br><br>
+            <button type="submit">문서 생성</button>
+        </form>
+    </div>   
+
+    <script>
+        function showPatentOptions() {
+            document.getElementById("patent-buttons").style.display = "block";
+        }
+
+        function showUploadForm() {
+            document.getElementById("upload-form").style.display = "block";
+        }
+    </script>
 </body>
 </html>
